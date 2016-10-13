@@ -10,7 +10,7 @@ int main(int argc, char const *argv[]) {
   char menu_intem_header [] = "Menu";
   char menu_intem_sellection [] = "Enter menu item number and press [ENTER]";
   char menu_intem_1 [] = "1. C intruduction: practical test convert inch to catimeters";
-  char menu_intem_2 [] = "2.1 - Alow and Not Allowed identifyer name";
+  char menu_intem_2 [] = "2.1 - Allowed and Not Allowed identifyer names";
   //char menu_intem_2 [] = "0. Play are debuuger";
   //code variables
   char simb;
