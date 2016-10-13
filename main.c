@@ -4,12 +4,13 @@ int main(int argc, char const *argv[]) {
 
   //Methods scope defention
   void converter();
-  //void debuger();
+  void ident_names();
 
   //Menu Strings
   char menu_intem_header [] = "Menu";
   char menu_intem_sellection [] = "Enter menu item number and press [ENTER]";
   char menu_intem_1 [] = "1. C intruduction: practical test convert inch to catimeters";
+  char menu_intem_2 [] = "2.1 - Alow and Not Allowed identifyer name";
   //char menu_intem_2 [] = "0. Play are debuuger";
   //code variables
   char simb;
@@ -20,12 +21,16 @@ int main(int argc, char const *argv[]) {
     printf("%s\n", menu_intem_header);
     printf("\n");
     printf("%s\n", menu_intem_1);
+    printf("%s\n", menu_intem_2);
 
     printf("%s", menu_intem_sellection);
     printf(":");
     simb = getchar();
     if(simb == '1'){
       converter();
+    }
+    if (simb == '2') {
+      ident_names();
     }
   }
 
@@ -71,7 +76,58 @@ void converter() {
   }
 }
 
+void ident_names(){
+
+  void flush();
+  void clear();
+
+  char *aNameHeader[0];
+  char *a_Name[5];
+
+  char *naNameHeader[0];
+  char *na_Name[5];
+
+  int size;
+  int step;
+
+  aNameHeader[0] = "Allowed Names";
+  naNameHeader[0] = "Not Allowed Names";
+
+  a_Name[0] = "allowname";
+  a_Name[1] = "Name_Name";
+  a_Name[2] = "nameName";
+  a_Name[3] = "allowname2";
+  a_Name[4] = "_allowname";
+
+  na_Name[0] = "**name";
+  na_Name[1] = "Name-Name";
+  na_Name[2] = "name Name";
+  na_Name[3] = "2allowname";
+  na_Name[4] = "allow`name";
+
+  step = 0;
+  size = sizeof(a_Name)/sizeof(a_Name[0]);
+
+clear();
+
+printf("%s\t%s\n\n", aNameHeader[0], naNameHeader[0]);
+
+
+ while (step < size){
+   printf("%s", a_Name[step]);
+   printf("\t%s\n", na_Name[step]);
+   step ++;
+ }
+
+  flush();
+  getchar();
+}
+
 void flush() {
   int fl;
   while ((fl = getchar()) != '\n' && fl != EOF) {}
+}
+
+void clear(){
+  printf("\e[1;1H\e[2J");
 }
