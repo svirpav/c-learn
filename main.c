@@ -5,7 +5,9 @@ void flush(void);
 void clear(void);
 void converter(void);
 void ident_names(void);
-void reserved_words();
+void reserved_words(void);
+void practicalTest_01(void);
+void sandbox(void);
 
 int main(int argc, char const *argv[]) {
 
@@ -13,9 +15,11 @@ int main(int argc, char const *argv[]) {
   //Menu Strings
   char menu_intem_header [] = "Menu";
   char menu_intem_sellection [] = "Enter menu item number and press [ENTER]";
-  char menu_intem_1 [] = "1. C intruduction: practical test convert inch to catimeters";
+  char menu_intem_1 [] = "1 - C intruduction: practical test convert inch to catimeters";
   char menu_intem_2 [] = "2 - Allowed and Not Allowed identifyer names";
   char menu_intem_3 [] = "3 - Key and Reserved words in C";
+  char menu_intem_4 [] = "4 - Practical test 1.0";
+  char menu_item_5[] = "0 - SandBox";
 
 
   //Code variables ddeclarartion
@@ -29,6 +33,8 @@ int main(int argc, char const *argv[]) {
     printf("%s\n", menu_intem_1);
     printf("%s\n", menu_intem_2);
     printf("%s\n", menu_intem_3);
+    printf("%s\n", menu_intem_4);
+    printf("%s\n", menu_item_5);
 
     printf("%s", menu_intem_sellection);
     printf(":");
@@ -36,12 +42,19 @@ int main(int argc, char const *argv[]) {
     if(simb == '1'){
       converter();
     }
-    if(simb == '2') {
+    else if(simb == '2') {
       ident_names();
     }
-    if(simb == '3'){
+    else if(simb == '3'){
       reserved_words();
     }
+    else if (simb == '4'){
+      practicalTest_01();
+    }
+    else if (simb == '0') {
+      sandbox();
+    }
+
   }
 
   return 0;
@@ -209,6 +222,38 @@ void reserved_words(void){
 
   flush();
   getchar();
+}
+
+//Practical Test 01
+
+void practicalTest_01(void) {
+
+  char test_item_1 [] = "1 - Task 01 Print your name + family name in one line by printf(),\
+print name + family name in two separate lines using one printf(), print name + family\
+name in one line using printf() + printf().";
+  char test_item_2[] = "";
+
+  clear();
+
+  printf("%s\n", test_item_1);
+  printf("%s\n", test_item_2);
+
+  flush();
+  getchar();
+
+}
+
+
+//SandBox
+
+void sandbox(void){
+
+  char sand_header [] = "This is the place to test code";
+  printf("%s\n", sand_header);
+
+  flush();
+  getchar();
+
 }
 
 //Flufh getchar() buffer;
