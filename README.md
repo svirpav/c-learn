@@ -3,5 +3,5 @@
 
 * 1 - Practical test - Converter.
   - Inch -> cm.
-* 2 - Allowed and Not Allowed identifyer names.
+* 2 - Allowed and Not Allowed identifier names.
 * 3 - Restricted and Reserved names.
