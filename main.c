@@ -1,4 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+//Define Macros
+#define MAX_CAHR_LEN 256
+
+//Global Variables for Program
+char buffer_read [MAX_CAHR_LEN];
+char *processed_string;
+char *exit_condition = "exit";
+char *remove_nl = "\n";
+
+int run;
+int exit_value;
+int menu_selector;
+
 
 //Methods declarartions
 void flush(void);
@@ -8,6 +23,12 @@ void ident_names(void);
 void reserved_words(void);
 void practicalTest_01(void);
 void sandbox(void);
+void debugger(void);
+char* exitProcessor(char* arg1_message, char *arg2_input, int *param1);
+char* stringHandler(char *arg1_message, char *arg2_input, char *ret_val);
+int integerHandler(char *arg1_message, char *arg2_input, int ret_value);
+float floatHandler(char *arg1_message, char *arg2_input, int ret_val);
+void age_to_days(int input_value);
 
 int main(int argc, char const *argv[]) {
 
@@ -22,12 +43,15 @@ int main(int argc, char const *argv[]) {
   char menu_item_5[] = "0 - SandBox";
 
 
-  //Code variables ddeclarartion
-  char simb;
-
+  run = 1;
   //Main code implementation
-  while(simb != 'e'){
+  while(run != 0){
+
+    //clear screen
     clear();
+
+    debugger();
+
     printf("%s\n", menu_intem_header);
     printf("\n");
     printf("%s\n", menu_intem_1);
@@ -36,22 +60,24 @@ int main(int argc, char const *argv[]) {
     printf("%s\n", menu_intem_4);
     printf("%s\n", menu_item_5);
 
-    printf("%s", menu_intem_sellection);
-    printf(":");
-    simb = getchar();
-    if(simb == '1'){
+
+    processed_string = exitProcessor(menu_intem_sellection, buffer_read, &run);
+    if(run == 0) break;
+    menu_selector = atoi(processed_string);
+
+    if(menu_selector == 1){
       converter();
     }
-    else if(simb == '2') {
+    else if(menu_selector == 2) {
       ident_names();
     }
-    else if(simb == '3'){
+    else if(menu_selector == 3){
       reserved_words();
     }
-    else if (simb == '4'){
+    else if (menu_selector == 4){
       practicalTest_01();
     }
-    else if (simb == '0') {
+    else if (menu_selector == 0) {
       sandbox();
     }
 
@@ -65,7 +91,7 @@ void converter(void) {
 
   //Strings declarartions
   char item_01_header [] = "Convert application";
-  char item_01_description [] = "(inch -> cm) Pease enter value :";
+  char item_01_description [] = "(inch -> cm)";
   char item_01_exitpromt [] = "For EXIT type e, to reload r and press [ENTER] :";
   char inches [] = "inches :";
   char cm [] = "cm :";
@@ -74,29 +100,29 @@ void converter(void) {
   float input_value;
   float conv_value;
   float result;
-  int item_01_simb;
 
   //Methode converter code handling
   conv_value = 2.54;
 
-  while (item_01_simb != 'e') {
-    item_01_simb = '0';
+
+  run = 2;
+  while (run == 2) {
+
+    //clear screen
     clear();
+
+    debugger();
+
     printf("%s\n", item_01_header);
-    printf("\n%s", item_01_description);
-    scanf("%f", &input_value);
+    printf("\n%s\n", item_01_description);
+
+    input_value = floatHandler("Place value", buffer_read, input_value);
     result = input_value * conv_value;
-    printf("%s %f\n", inches, input_value );
+    printf("%s %f\n", inches, input_value);
     printf("%s %f\n", cm, result);
-    flush();
 
-    while (item_01_simb != 'r') {
-      printf("%s", item_01_exitpromt);
-      item_01_simb = getchar();
-      if (item_01_simb == 'e') break;
-      flush();
-    }
 
+    processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
   }
 }
 
@@ -112,6 +138,8 @@ void ident_names(void){
 
   int size;
   int step;
+
+  int run = 3;
 
 //code variables value assignments
   aNameHeader[0] = "Allowed Names";
@@ -129,11 +157,14 @@ void ident_names(void){
   na_Name[3] = "2allowname";
   na_Name[4] = "allow`name";
 
+  while(run == 3){
   step = 0;
   size = sizeof(a_Name)/sizeof(a_Name[0]);
 
 //Clear screen
 clear();
+
+debugger();
 
 //Code handling
 printf("%s\t%s\n\n", aNameHeader[0], naNameHeader[0]);
@@ -145,8 +176,8 @@ printf("%s\t%s\n\n", aNameHeader[0], naNameHeader[0]);
    step ++;
  }
 
-  flush();
-  getchar();
+  processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
+  }
 }
 
 //Key/Reserved words method implementation
@@ -204,6 +235,13 @@ void reserved_words(void){
   rWords[41] = "_Static_asset";
   rWords[42] = "#_Thread_local";
 
+  run = 4;
+  while (run == 4) {
+
+  clear();
+
+  debugger();
+
   size = sizeof(rWords) / sizeof(rWords[0]);
 
   step = 0;
@@ -218,28 +256,78 @@ void reserved_words(void){
     }
     column++;
     step++;
-  }
+    }
 
-  flush();
-  getchar();
+    printf("\nEnter command :");
+    processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
+  }
 }
 
 //Practical Test 01
 
 void practicalTest_01(void) {
 
-  char test_item_1 [] = "1 - Task 01 Print your name + family name in one line by printf(),\
-print name + family name in two separate lines using one printf(), print name + family\
-name in one line using printf() + printf().";
-  char test_item_2[] = "";
 
-  clear();
+  //Methor variables
+  char *test_1_task_1 = "1 - Task 1 :Input you name and surname then it will be printed in different varitions";
+  char *test_1_task_2 = "2 - Task 2 :Input your adress system will prin it.";
 
-  printf("%s\n", test_item_1);
-  printf("%s\n", test_item_2);
+  char test_01_name[MAX_CAHR_LEN];
+  char test_01_surname[MAX_CAHR_LEN];
+  char test_01_street[MAX_CAHR_LEN];
+  char test_01_city[MAX_CAHR_LEN];
+  char test_01_zip[MAX_CAHR_LEN];
+  char test_01_state[MAX_CAHR_LEN];
+  char test_01_coutntry[MAX_CAHR_LEN];
+  int test_01_age;
 
-  flush();
-  getchar();
+  run = 5;
+
+  while (run == 5) {
+
+    clear();
+
+    debugger();
+
+    printf("%s\n\n", test_1_task_1);
+
+
+    stringHandler("Enert your name", buffer_read, test_01_name);
+    stringHandler("Enter your familyname", buffer_read, test_01_surname);
+    stringHandler("Enter street name", buffer_read, test_01_street);
+    stringHandler("Enter ZIP", buffer_read, test_01_zip);
+    stringHandler("Enter city name", buffer_read, test_01_city);
+    stringHandler("Enter state name", buffer_read, test_01_state);
+    stringHandler("Enter country name", buffer_read, test_01_coutntry);
+    test_01_age = integerHandler("Please eneter your age", buffer_read, test_01_age);
+
+
+
+    clear();
+    debugger();
+    printf("This block prints printf(arg1, arg2 \\n)\n");
+    printf("%s %s\n\n", test_01_name, test_01_surname);
+
+    printf("This block prints printf(arg1 \\n, arg2 \\n) \n");
+    printf("%s\n%s\n\n", test_01_name, test_01_surname);
+
+    printf("This block prints printf(arg1\\n), printf(arg2\\n) \n");
+    printf("%s\n", test_01_name);
+    printf("%s\n\n", test_01_surname);
+
+    printf("This bloc will print personal information details\n\n");
+    printf("%s %s\n", test_01_name, test_01_surname);
+    printf("%s\n", test_01_street);
+    printf("%s, %s, %s\n", test_01_city, test_01_zip, test_01_state);
+    printf("%s\n\n", test_01_coutntry);
+
+    age_to_days(test_01_age);
+
+
+
+    printf("Exit command :");
+    processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
+  }
 
 }
 
@@ -248,13 +336,105 @@ name in one line using printf() + printf().";
 
 void sandbox(void){
 
-  char sand_header [] = "This is the place to test code";
-  printf("%s\n", sand_header);
+  int age;
+  char string[MAX_CAHR_LEN];
+  run = 6;
 
-  flush();
-  getchar();
+  while (run == 6) {
+
+    clear();
+
+    debugger();
+
+    printf("Hello you are in SANDBOX\n\n");
+
+    stringHandler("Enter value",buffer_read, string);
+    printf("%s\n", string);
+
+    processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
+
+  }
 
 }
+
+char* exitProcessor(char* arg1_message, char *arg2_input, int *param1){
+
+  printf("%s: ", arg1_message);
+  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  arg2_input = strtok(arg2_input, "\n");
+
+  if (arg2_input == NULL) {
+    arg2_input = "User Input is pissing";
+  }
+
+  if (exit_value = strcmp(arg2_input, exit_condition) == 0) {
+    if(*param1 > 1){
+      *param1 = 1;
+    }
+    else{
+      *param1 = 0;
+    }
+  }
+
+  return arg2_input;
+}
+
+char* stringHandler(char *arg1_message, char *arg2_input, char *ret_value){
+
+  printf("%s: ", arg1_message);
+  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  arg2_input = strtok(arg2_input, "\n");
+
+  if (arg2_input == NULL) {
+    strcpy(ret_value, "Input is missing");
+  }
+  else{
+    strcpy(ret_value, arg2_input);
+  }
+
+  return ret_value;
+}
+
+
+int integerHandler(char *arg1_message, char *arg2_input, int ret_value){
+
+  printf("%s: ", arg1_message);
+  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  arg2_input = strtok(arg2_input, "\n");
+  if (arg2_input == NULL) {
+    ret_value = 0;
+  }
+  else{
+    ret_value = atoi(arg2_input);
+  }
+
+
+  return ret_value;
+}
+
+float floatHandler(char *arg1_message, char *arg2_input, int ret_val){
+
+  printf("%s: ", arg1_message);
+  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  arg2_input = strtok(arg2_input, "\n");
+  if (arg2_input == NULL) {
+    ret_val = 0;
+  }
+  else{
+    ret_val = atof(arg2_input);
+  }
+
+
+  return ret_val;
+}
+
+void age_to_days(int input_value){
+
+  int day_val;
+  day_val = input_value * 365;
+  printf("Your age is %d years, this %d days.\n", input_value, day_val);
+}
+
 
 //Flufh getchar() buffer;
 void flush(void){
@@ -265,4 +445,13 @@ void flush(void){
 //Clear screen Ubix.
 void clear(void){
   printf("\e[1;1H\e[2J");
+}
+
+void debugger(void) {
+
+  printf("DEBUG\n");
+  printf("%d\n", run);
+  printf("%s\n", buffer_read);
+  printf("DEBUG\n\n");
+
 }
