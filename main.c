@@ -29,6 +29,8 @@ char* stringHandler(char *arg1_message, char *arg2_input, char *ret_val);
 int integerHandler(char *arg1_message, char *arg2_input, int ret_value);
 float floatHandler(char *arg1_message, char *arg2_input, int ret_val);
 void age_to_days(int input_value);
+void data_types_chap3(void);
+void exit_block(void);
 
 int main(int argc, char const *argv[]) {
 
@@ -40,7 +42,8 @@ int main(int argc, char const *argv[]) {
   char menu_intem_2 [] = "2 - Allowed and Not Allowed identifyer names";
   char menu_intem_3 [] = "3 - Key and Reserved words in C";
   char menu_intem_4 [] = "4 - Practical test 1.0";
-  char menu_item_5[] = "0 - SandBox";
+  char menu_intem_5 [] = "5 - Data types in C - Chapert 3";
+  char menu_item_0[] = "0 - SandBox";
 
 
   run = 1;
@@ -58,7 +61,8 @@ int main(int argc, char const *argv[]) {
     printf("%s\n", menu_intem_2);
     printf("%s\n", menu_intem_3);
     printf("%s\n", menu_intem_4);
-    printf("%s\n", menu_item_5);
+    printf("%s\n", menu_intem_5);
+    printf("%s\n", menu_item_0);
 
 
     processed_string = exitProcessor(menu_intem_sellection, buffer_read, &run);
@@ -76,6 +80,9 @@ int main(int argc, char const *argv[]) {
     }
     else if (menu_selector == 4){
       practicalTest_01();
+    }
+    else if (menu_selector == 5) {
+      data_types_chap3();
     }
     else if (menu_selector == 0) {
       sandbox();
@@ -433,6 +440,23 @@ void age_to_days(int input_value){
   int day_val;
   day_val = input_value * 365;
   printf("Your age is %d years, this %d days.\n", input_value, day_val);
+}
+
+void data_types_chap3(void) {
+
+    run = 7;
+
+    while (run == 7) {
+
+      clear();
+      debugger();
+      exit_block();
+    }
+}
+
+void exit_block(void){
+
+  processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
 }
 
 
