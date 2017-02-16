@@ -129,7 +129,7 @@ void converter(void) {
     printf("%s %f\n", cm, result);
 
 
-    processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
+    exit_block();
   }
 }
 
@@ -183,7 +183,7 @@ printf("%s\t%s\n\n", aNameHeader[0], naNameHeader[0]);
    step ++;
  }
 
-  processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
+  exit_block();
   }
 }
 
@@ -266,7 +266,7 @@ void reserved_words(void){
     }
 
     printf("\nEnter command :");
-    processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
+    exit_block();
   }
 }
 
@@ -333,7 +333,7 @@ void practicalTest_01(void) {
 
 
     printf("Exit command :");
-    processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
+    exit_block();
   }
 
 }
@@ -358,7 +358,7 @@ void sandbox(void){
     stringHandler("Enter value",buffer_read, string);
     printf("%s\n", string);
 
-    processed_string = exitProcessor("To exit from this block type (exit) and press [ENTER]", buffer_read, &run);
+    exit_block();
 
   }
 
