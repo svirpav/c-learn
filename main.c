@@ -64,10 +64,8 @@ int main(int argc, char const *argv[]) {
     printf("%s\n", menu_intem_5);
     printf("%s\n", menu_item_0);
 
-
-    processed_string = exitProcessor(menu_intem_sellection, buffer_read, &run);
     if(run == 0) break;
-    menu_selector = atoi(processed_string);
+    menu_selector = integerHandler(menu_intem_sellection, buffer_read, menu_selector);
 
     if(menu_selector == 1){
       converter();
