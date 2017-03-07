@@ -3,6 +3,7 @@
 #include <string.h>
 //Define Macros
 #define MAX_CAHR_LEN 256
+#define gotoxy(x,y) printf("\033[%d;%dH", (x),(y))
 
 //Global Variables for Program
 char buffer_read [MAX_CAHR_LEN];
@@ -22,14 +23,16 @@ void converter(void);
 void ident_names(void);
 void reserved_words(void);
 void practicalTest_01(void);
+void data_types_chap3(void);
+void string_inout_char4(void);
 void sandbox(void);
 void debugger(void);
 char* exitProcessor(char* arg1_message, char *arg2_input, int *param1);
 char* stringHandler(char *arg1_message, char *arg2_input, char *ret_val);
 int integerHandler(char *arg1_message, char *arg2_input, int ret_value);
-float floatHandler(char *arg1_message, char *arg2_input, int ret_val);
+float floatHandler(char *arg1_message, char *arg2_input, float ret_val);
+double doubleHandler(char *arg1_message, char *arg2_input, double ret_val);
 void age_to_days(int input_value);
-void data_types_chap3(void);
 void exit_block(void);
 
 int main(int argc, char const *argv[]) {
@@ -37,13 +40,14 @@ int main(int argc, char const *argv[]) {
 
   //Menu Strings
   char menu_intem_header [] = "Menu";
-  char menu_intem_sellection [] = "Enter menu item number and press [ENTER]";
-  char menu_intem_1 [] = "1 - C intruduction: practical test convert inch to catimeters";
-  char menu_intem_2 [] = "2 - Allowed and Not Allowed identifyer names";
-  char menu_intem_3 [] = "3 - Key and Reserved words in C";
-  char menu_intem_4 [] = "4 - Practical test 1.0";
-  char menu_intem_5 [] = "5 - Data types in C - Chapert 3";
-  char menu_item_0[] = "0 - SandBox";
+  char menu_intem_sellection [] = "Enter menu item number and press [ENTER]:";
+  char menu_intem_1 [MAX_CAHR_LEN] = "(1) - Chahapert 1 - Intruduction: practical test convert inch to catimeters";
+  char menu_intem_2 [MAX_CAHR_LEN] = "(2) - Chapert 2 - Allowed and Not Allowed identifyer names";
+  char menu_intem_3 [MAX_CAHR_LEN] = "(3) - Chapter 2 - Key and Reserved words in C";
+  char menu_intem_4 [MAX_CAHR_LEN] = "(4) - First practical test";
+  char menu_intem_5 [MAX_CAHR_LEN] = "(5) - Chapert 3 - Data types in C - Chapert 3";
+  char menu_intem_6 [MAX_CAHR_LEN] = "(6) - Chapter 4 - Character Strings and Formatted Input/Output";
+  char menu_item_0[] = "(0) - SandBox";
 
 
   run = 1;
@@ -62,6 +66,7 @@ int main(int argc, char const *argv[]) {
     printf("%s\n", menu_intem_3);
     printf("%s\n", menu_intem_4);
     printf("%s\n", menu_intem_5);
+    printf("%s\n", menu_intem_6);
     printf("%s\n", menu_item_0);
 
     if(run == 0) break;
@@ -81,6 +86,9 @@ int main(int argc, char const *argv[]) {
     }
     else if (menu_selector == 5) {
       data_types_chap3();
+    }
+    else if (menu_selector == 6) {
+      string_inout_char4();
     }
     else if (menu_selector == 0) {
       sandbox();
@@ -121,7 +129,7 @@ void converter(void) {
     printf("%s\n", item_01_header);
     printf("\n%s\n", item_01_description);
 
-    input_value = floatHandler("Place value", buffer_read, input_value);
+    input_value = floatHandler("Enter value in inches: 0.0\b\b\b", buffer_read, input_value);
     result = input_value * conv_value;
     printf("%s %f\n", inches, input_value);
     printf("%s %f\n", cm, result);
@@ -144,7 +152,6 @@ void ident_names(void){
   int size;
   int step;
 
-  int run = 3;
 
 //code variables value assignments
   aNameHeader[0] = "Allowed Names";
@@ -162,6 +169,7 @@ void ident_names(void){
   na_Name[3] = "2allowname";
   na_Name[4] = "allow`name";
 
+  run = 3;
   while(run == 3){
   step = 0;
   size = sizeof(a_Name)/sizeof(a_Name[0]);
@@ -262,8 +270,7 @@ void reserved_words(void){
     column++;
     step++;
     }
-
-    printf("\nEnter command :");
+    printf("\n");
     exit_block();
   }
 }
@@ -297,13 +304,13 @@ void practicalTest_01(void) {
     printf("%s\n\n", test_1_task_1);
 
 
-    stringHandler("Enert your name", buffer_read, test_01_name);
-    stringHandler("Enter your familyname", buffer_read, test_01_surname);
-    stringHandler("Enter street name", buffer_read, test_01_street);
-    stringHandler("Enter ZIP", buffer_read, test_01_zip);
-    stringHandler("Enter city name", buffer_read, test_01_city);
-    stringHandler("Enter state name", buffer_read, test_01_state);
-    stringHandler("Enter country name", buffer_read, test_01_coutntry);
+    stringHandler("Enert :NAME\b\b\b\b", buffer_read, test_01_name);
+    stringHandler("Enter :SURNAME\b\b\b\b\b\b\b", buffer_read, test_01_surname);
+    stringHandler("Enter :STREET\b\b\b\b\b\b", buffer_read, test_01_street);
+    stringHandler("Enter :ZIP\b\b\b", buffer_read, test_01_zip);
+    stringHandler("Enter :CITY\b\b\b\b", buffer_read, test_01_city);
+    stringHandler("Enter :SATE\b\b\b\b", buffer_read, test_01_state);
+    stringHandler("Enter :COUNTRY\b\b\b\b\b\b\b", buffer_read, test_01_coutntry);
     test_01_age = integerHandler("Please eneter your age", buffer_read, test_01_age);
 
 
@@ -337,11 +344,181 @@ void practicalTest_01(void) {
 }
 
 
+void data_types_chap3(void) {
+
+    run = 7;
+
+
+    char *data_kr[7];
+    char *data_c90[2];
+    char *data_c99[3];
+    char *data_string = "test_string";
+    unsigned char data_ch;
+    int row;
+
+    data_kr[0] = "int";
+    data_kr[1] = "short";
+    data_kr[2] = "long";
+    data_kr[3] = "unsigned";
+    data_kr[4] = "char";
+    data_kr[5] = "double";
+    data_kr[6] = "float";
+
+    data_c90[0] = "signed";
+    data_c90[1] = "void";
+
+    data_c99[0] = "_Bool";
+    data_c99[1] = "_Complex";
+    data_c99[2] = "_Imaginary";
+
+    int data_value_int;
+    float data_value_float;
+    double data_value_double;
+
+    while (run == 7) {
+
+      clear();
+      debugger();
+
+      printf("Date types key Reserved words \n\n");
+
+      printf("K&R standat:\n");
+      for (int i = 0; i < 7; i++) {
+        printf("%s\n", data_kr[i]);
+      }
+      printf("\n");
+
+      printf("C90 standrad Reserved key words:\n");
+      for (int i = 0; i < 2; i++) {
+        printf("%s\n", data_c90[i]);
+      }
+
+      printf("\n");
+
+      printf("C99 standrad Reserved key words:\n");
+      for (int i = 0; i < 3; i++) {
+        printf("%s\n", data_c99[i]);
+      }
+
+
+
+      printf("\n");
+
+      data_value_int = integerHandler("Please enter value int: 0\b", buffer_read, data_value_int);
+      data_value_float = floatHandler("Please inter value float: 0.0\b\b\b", buffer_read, data_value_float);
+      data_value_double = doubleHandler("Please eneter value double: 0.0\b\b\b", buffer_read, data_value_double);
+
+      printf("Decimal: %d\n", data_value_int);
+      printf("Octa: %o\n", data_value_int);
+      printf("Hex: %x\n\n", data_value_int);
+
+      printf("Float: %f\n", data_value_float);
+      printf("Double: %f\n", data_value_double);
+
+      printf("Float expanent: %e\n", data_value_float);
+      printf("Double expanent: %e\n", data_value_double);
+
+      printf("Float bool expanent: %a\n", data_value_float);
+      printf("Double bool expanent: %a\n", data_value_double);
+      printf("\n");
+
+      printf("Size of char %zd(byte)\n", sizeof(char));
+      printf("Size of short %zd(byte)\n", sizeof(short));
+      printf("Size of int %zd(byte)\n", sizeof(int));
+      printf("Size of long int %zd(byte)\n", sizeof(long int));
+      //printf("Size of long char %zd(byte)\n", sizeof(long char));
+      //printf("Size of long short %zd(byte)\n", sizeof(long short));
+      printf("Size of long %zd(byte)\n", sizeof(long));
+      printf("Size of float %zd(byte)\n", sizeof(float));
+      //printf("Size of long float %zd(byte)\n", sizeof(long float));
+      printf("Size of double %zd(byte)\n", sizeof(double));
+      printf("Size of long double %zd(byte)\n", sizeof(long double));
+
+      printf("\n");
+
+
+      row = 0;
+
+      printf("Regular symbols: \n");
+      for (int i = 0; i < 256; i++) {
+
+        if(i > 32 && i < 127){
+          data_ch = i;
+          printf("%c(%d) ",data_ch, data_ch );
+          row ++;
+
+          if(row == 10){
+              row = 0;
+              printf("\n");
+          }
+        }
+
+      }
+
+      row = 0;
+
+      printf("\n\n");
+
+      printf("Special symbols: \n");
+      for (int i = 0; i < 256; i++) {
+
+        if(i > 160){
+          data_ch = i;
+          printf("%c(%d) ",data_ch, data_ch );
+          row ++;
+
+          if(row == 10){
+              row = 0;
+              printf("\n");
+          }
+        }
+      }
+      printf("\n\n");
+
+      exit_block();
+    }
+}
+
+//Chap-4 String and format input/output text
+
+void string_inout_char4(void){
+
+  int i_string_size;
+  int i_string_size_01;
+  int i_string_length;
+
+  char s_string_01[MAX_CAHR_LEN];
+
+  run = 8;
+
+  while (run == 8) {
+    clear();
+    debugger();
+    printf("Charpter-4 Character Strings and Formatted Input/Output\n");
+
+    stringHandler("Please eneter any string: (__________)\b\b\b\b\b\b\b\b\b\b\b", buffer_read, s_string_01);
+    i_string_length = strlen(s_string_01);
+    i_string_size = sizeof s_string_01;
+    i_string_size_01 = sizeof(s_string_01);
+    printf("Entered string is: %s\n", s_string_01);
+    printf("The lenght of the string is : %d letters\n", i_string_length);
+    printf("There is %d bites dedicated to store this string\n", i_string_size);
+    printf("The adress of size is :%d\n", &i_string_size);
+    printf("The address of lenght is :%d\n", &i_string_length);
+
+    printf("\n");
+    exit_block();
+  }
+
+}
+
+
 //SandBox
 
 void sandbox(void){
 
-  int age;
+  float value;
+  float f_number;
   char string[MAX_CAHR_LEN];
   run = 6;
 
@@ -351,10 +528,19 @@ void sandbox(void){
 
     debugger();
 
+
     printf("Hello you are in SANDBOX\n\n");
+
+    printf("Enter value:");
+    printf("_______\b\b\b\b\b\b\b");
+    scanf("%f", &f_number);
+    printf("That is the number%f\n", f_number);
 
     stringHandler("Enter value",buffer_read, string);
     printf("%s\n", string);
+
+    value = atof(string);
+    printf("Convertd number is : %f\n", value);
 
     exit_block();
 
@@ -386,7 +572,7 @@ char* exitProcessor(char* arg1_message, char *arg2_input, int *param1){
 
 char* stringHandler(char *arg1_message, char *arg2_input, char *ret_value){
 
-  printf("%s: ", arg1_message);
+  printf("%s", arg1_message);
   fgets(arg2_input, MAX_CAHR_LEN, stdin);
   arg2_input = strtok(arg2_input, "\n");
 
@@ -403,7 +589,7 @@ char* stringHandler(char *arg1_message, char *arg2_input, char *ret_value){
 
 int integerHandler(char *arg1_message, char *arg2_input, int ret_value){
 
-  printf("%s: ", arg1_message);
+  printf("%s", arg1_message);
   fgets(arg2_input, MAX_CAHR_LEN, stdin);
   arg2_input = strtok(arg2_input, "\n");
   if (arg2_input == NULL) {
@@ -417,9 +603,9 @@ int integerHandler(char *arg1_message, char *arg2_input, int ret_value){
   return ret_value;
 }
 
-float floatHandler(char *arg1_message, char *arg2_input, int ret_val){
+float floatHandler(char *arg1_message, char *arg2_input, float ret_val){
 
-  printf("%s: ", arg1_message);
+  printf("%s", arg1_message);
   fgets(arg2_input, MAX_CAHR_LEN, stdin);
   arg2_input = strtok(arg2_input, "\n");
   if (arg2_input == NULL) {
@@ -429,9 +615,25 @@ float floatHandler(char *arg1_message, char *arg2_input, int ret_val){
     ret_val = atof(arg2_input);
   }
 
+  return ret_val;
+}
+
+double doubleHandler(char *arg1_message, char *arg2_input, double ret_val){
+
+  printf("%s", arg1_message);
+  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  arg2_input = strtok(arg2_input, "\n");
+  if (arg2_input == NULL) {
+    ret_val = 0;
+  }
+  else{
+    ret_val = atof(arg2_input);
+  }
 
   return ret_val;
 }
+
+
 
 void age_to_days(int input_value){
 
@@ -440,17 +642,6 @@ void age_to_days(int input_value){
   printf("Your age is %d years, this %d days.\n", input_value, day_val);
 }
 
-void data_types_chap3(void) {
-
-    run = 7;
-
-    while (run == 7) {
-
-      clear();
-      debugger();
-      exit_block();
-    }
-}
 
 void exit_block(void){
 
