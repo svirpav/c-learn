@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+#include <float.h>
 //Define Macros
-#define MAX_CAHR_LEN 256
-#define gotoxy(x,y) printf("\033[%d;%dH", (x),(y))
+//#define gotoxy(x,y) printf("\033[%d;%dH", (x),(y))
 
 //Global Variables for Program
-char buffer_read [MAX_CAHR_LEN];
+char buffer_read [UCHAR_MAX];
 char *processed_string;
 char *exit_condition = "exit";
 char *remove_nl = "\n";
@@ -25,6 +26,7 @@ void reserved_words(void);
 void practicalTest_01(void);
 void data_types_chap3(void);
 void string_inout_char4(void);
+void operator_expressions(void);
 void sandbox(void);
 void debugger(void);
 char* exitProcessor(char* arg1_message, char *arg2_input, int *param1);
@@ -41,12 +43,13 @@ int main(int argc, char const *argv[]) {
   //Menu Strings
   char menu_intem_header [] = "Menu";
   char menu_intem_sellection [] = "Enter menu item number and press [ENTER]:";
-  char menu_intem_1 [MAX_CAHR_LEN] = "(1) - Chahapert 1 - Intruduction: practical test convert inch to catimeters";
-  char menu_intem_2 [MAX_CAHR_LEN] = "(2) - Chapert 2 - Allowed and Not Allowed identifyer names";
-  char menu_intem_3 [MAX_CAHR_LEN] = "(3) - Chapter 2 - Key and Reserved words in C";
-  char menu_intem_4 [MAX_CAHR_LEN] = "(4) - First practical test";
-  char menu_intem_5 [MAX_CAHR_LEN] = "(5) - Chapert 3 - Data types in C - Chapert 3";
-  char menu_intem_6 [MAX_CAHR_LEN] = "(6) - Chapter 4 - Character Strings and Formatted Input/Output";
+  char menu_intem_1 [UCHAR_MAX] = "(1) - Chapert 1 - Intruduction: practical test convert inch to cantimeters";
+  char menu_intem_2 [UCHAR_MAX] = "(2) - Chapert 2 - Allowed and Not Allowed identifyer names";
+  char menu_intem_3 [UCHAR_MAX] = "(3) - Chapter 2 - Key and Reserved words in C";
+  char menu_intem_4 [UCHAR_MAX] = "(4) - First practical test";
+  char menu_intem_5 [UCHAR_MAX] = "(5) - Chapert 3 - Data types in C";
+  char menu_intem_6 [UCHAR_MAX] = "(6) - Chapter 4 - Character Strings and Formatted Input/Output";
+  char menu_intem_7 [UCHAR_MAX] = "(7) - Chapter 5 - Operators, Expressions, and Statements";
   char menu_item_0[] = "(0) - SandBox";
 
 
@@ -67,6 +70,7 @@ int main(int argc, char const *argv[]) {
     printf("%s\n", menu_intem_4);
     printf("%s\n", menu_intem_5);
     printf("%s\n", menu_intem_6);
+    printf("%s\n", menu_intem_7);
     printf("%s\n", menu_item_0);
 
     if(run == 0) break;
@@ -90,6 +94,9 @@ int main(int argc, char const *argv[]) {
     else if (menu_selector == 6) {
       string_inout_char4();
     }
+    else if (menu_selector == 7) {
+      operator_expressions();
+    }
     else if (menu_selector == 0) {
       sandbox();
     }
@@ -105,7 +112,6 @@ void converter(void) {
   //Strings declarartions
   char item_01_header [] = "Convert application";
   char item_01_description [] = "(inch -> cm)";
-  char item_01_exitpromt [] = "For EXIT type e, to reload r and press [ENTER] :";
   char inches [] = "inches :";
   char cm [] = "cm :";
 
@@ -197,7 +203,6 @@ printf("%s\t%s\n\n", aNameHeader[0], naNameHeader[0]);
 void reserved_words(void){
 
 //Variables declarartion
-  char key_header[] = "Key words in C, restricted to use.";
   char *rWords[43];
 
   int size;
@@ -282,15 +287,14 @@ void practicalTest_01(void) {
 
   //Methor variables
   char *test_1_task_1 = "1 - Task 1 :Input you name and surname then it will be printed in different varitions";
-  char *test_1_task_2 = "2 - Task 2 :Input your adress system will prin it.";
 
-  char test_01_name[MAX_CAHR_LEN];
-  char test_01_surname[MAX_CAHR_LEN];
-  char test_01_street[MAX_CAHR_LEN];
-  char test_01_city[MAX_CAHR_LEN];
-  char test_01_zip[MAX_CAHR_LEN];
-  char test_01_state[MAX_CAHR_LEN];
-  char test_01_coutntry[MAX_CAHR_LEN];
+  char test_01_name[UCHAR_MAX];
+  char test_01_surname[UCHAR_MAX];
+  char test_01_street[UCHAR_MAX];
+  char test_01_city[UCHAR_MAX];
+  char test_01_zip[UCHAR_MAX];
+  char test_01_state[UCHAR_MAX];
+  char test_01_coutntry[UCHAR_MAX];
   int test_01_age;
 
   run = 5;
@@ -352,7 +356,6 @@ void data_types_chap3(void) {
     char *data_kr[7];
     char *data_c90[2];
     char *data_c99[3];
-    char *data_string = "test_string";
     unsigned char data_ch;
     int row;
 
@@ -384,7 +387,7 @@ void data_types_chap3(void) {
 
       printf("K&R standat:\n");
       for (int i = 0; i < 7; i++) {
-        printf("%s\n", data_kr[i]);
+        printf("%9s\n", data_kr[i]);
       }
       printf("\n");
 
@@ -487,7 +490,7 @@ void string_inout_char4(void){
   int i_string_size_01;
   int i_string_length;
 
-  char s_string_01[MAX_CAHR_LEN];
+  char s_string_01[UCHAR_MAX];
 
   run = 8;
 
@@ -502,14 +505,29 @@ void string_inout_char4(void){
     i_string_size_01 = sizeof(s_string_01);
     printf("Entered string is: %s\n", s_string_01);
     printf("The lenght of the string is : %d letters\n", i_string_length);
-    printf("There is %d bites dedicated to store this string\n", i_string_size);
-    printf("The adress of size is :%d\n", &i_string_size);
-    printf("The address of lenght is :%d\n", &i_string_length);
+    printf("There is %d bites reserved in memory to store this string\n", i_string_size);
+    //printf("The adress of size is :%d\n", &i_string_size);
+    //printf("The address of lenght is :%d\n", &i_string_length);
 
     printf("\n");
     exit_block();
   }
 
+}
+
+void operator_expressions(void){
+
+  run = 9;
+
+  while (run == 9) {
+
+    clear();
+    debugger();
+    printf("Operators, Expressions, and Statements\n");
+
+    printf("\n");
+    exit_block();
+  }
 }
 
 
@@ -519,7 +537,7 @@ void sandbox(void){
 
   float value;
   float f_number;
-  char string[MAX_CAHR_LEN];
+  char string[UCHAR_MAX];
   run = 6;
 
   while (run == 6) {
@@ -530,7 +548,6 @@ void sandbox(void){
 
 
     printf("Hello you are in SANDBOX\n\n");
-
     printf("Enter value:");
     printf("_______\b\b\b\b\b\b\b");
     scanf("%f", &f_number);
@@ -551,14 +568,14 @@ void sandbox(void){
 char* exitProcessor(char* arg1_message, char *arg2_input, int *param1){
 
   printf("%s: ", arg1_message);
-  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  fgets(arg2_input, UCHAR_MAX, stdin);
   arg2_input = strtok(arg2_input, "\n");
 
   if (arg2_input == NULL) {
     arg2_input = "User Input is pissing";
   }
 
-  if (exit_value = strcmp(arg2_input, exit_condition) == 0) {
+  if ((exit_value = strcmp(arg2_input, exit_condition))== 0) {
     if(*param1 > 1){
       *param1 = 1;
     }
@@ -573,7 +590,7 @@ char* exitProcessor(char* arg1_message, char *arg2_input, int *param1){
 char* stringHandler(char *arg1_message, char *arg2_input, char *ret_value){
 
   printf("%s", arg1_message);
-  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  fgets(arg2_input, UCHAR_MAX, stdin);
   arg2_input = strtok(arg2_input, "\n");
 
   if (arg2_input == NULL) {
@@ -590,7 +607,7 @@ char* stringHandler(char *arg1_message, char *arg2_input, char *ret_value){
 int integerHandler(char *arg1_message, char *arg2_input, int ret_value){
 
   printf("%s", arg1_message);
-  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  fgets(arg2_input, UCHAR_MAX, stdin);
   arg2_input = strtok(arg2_input, "\n");
   if (arg2_input == NULL) {
     ret_value = 0;
@@ -606,7 +623,7 @@ int integerHandler(char *arg1_message, char *arg2_input, int ret_value){
 float floatHandler(char *arg1_message, char *arg2_input, float ret_val){
 
   printf("%s", arg1_message);
-  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  fgets(arg2_input, UCHAR_MAX, stdin);
   arg2_input = strtok(arg2_input, "\n");
   if (arg2_input == NULL) {
     ret_val = 0;
@@ -621,7 +638,7 @@ float floatHandler(char *arg1_message, char *arg2_input, float ret_val){
 double doubleHandler(char *arg1_message, char *arg2_input, double ret_val){
 
   printf("%s", arg1_message);
-  fgets(arg2_input, MAX_CAHR_LEN, stdin);
+  fgets(arg2_input, UCHAR_MAX, stdin);
   arg2_input = strtok(arg2_input, "\n");
   if (arg2_input == NULL) {
     ret_val = 0;
