@@ -7,4 +7,5 @@
 * 4 - First practical test.
 * 5 - Chapert 3 - Data types in C
 * 6 - Chapter 4 - Character Strings and Formatted Input/Output
+* 7 - Chapter 5 - Operators, Expressions, and Statements
 * 0 - SandBox.
