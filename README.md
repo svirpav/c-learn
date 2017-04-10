@@ -9,4 +9,5 @@
 * 6 - Chapter 4 - Character Strings and Formatted Input/Output
 * 7 - Chapter 5 - Operators, Expressions, and Statements
 * 8 - Chapter 6 - C Control Statements: Looping
+* 9 - Chapter 7 - C Control operators, branching and Jumps
 * 0 - SandBox.
