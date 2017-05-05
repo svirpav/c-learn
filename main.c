@@ -4,6 +4,7 @@
 #include <limits.h>
 #include <float.h>
 #include <math.h>
+#include <ctype.h>
 
 
 
@@ -829,11 +830,243 @@ void control_st_loop(int run){
 
 void operators_branch_jump(int run_val){
 
-  clear();
+  int i_obj_menu_selctor;
+
 
   while (menu_selector > 0) {
+    clear();
 
-    printf("Control operators, branches, jumps \n");
+    printf("Control operators, branches, jumps \n\n");
+
+    printf("1. Simple word encoder \n");
+    printf("2. ctype.h - isaplha()\n");
+    printf("3. Residual\n");
+    printf("4. continue & break\n");
+    printf("5. Switch\n");
+    printf("\n");
+
+    i_obj_menu_selctor = intHandler("Sellect from above options: ", buffer_read);
+
+    if(i_obj_menu_selctor == 1){
+
+      char c_obj_str_01;
+
+      printf("Enter pharse to encode it :");
+      while ((c_obj_str_01 = getchar()) != '\n') {
+
+        putchar(c_obj_str_01 + 1);
+      }
+      printf("\n");
+    }
+
+    else if(i_obj_menu_selctor == 2){
+
+      char c_obj_str_01;
+
+      printf("Enter pharse to encode it :");
+      while ((c_obj_str_01 = getchar()) != '\n') {
+
+        if (isalpha(c_obj_str_01)) putchar(c_obj_str_01 + 10);
+        else putchar(c_obj_str_01);
+      }
+      printf("\n");
+    }
+
+    else if(i_obj_menu_selctor == 3){
+
+      int i_obj_residual;
+      int i_obj_exp_residual;
+
+      while ((i_obj_residual = intHandler("Enter the number :", buffer_read)) > 0) {
+
+        for (int i = 2; i <= 100; i++) {
+
+          if((i_obj_residual % i) == 0){
+            i_obj_exp_residual = i_obj_residual;
+
+            while((i_obj_exp_residual % i) == 0){
+              i_obj_exp_residual /= i;
+              printf("%d (%d)\n", i, i_obj_exp_residual);
+            }
+
+          }
+          else;
+        }
+      }
+    }
+
+    else if (i_obj_menu_selctor == 4) {
+
+      int i_obj_cb_end_val;
+      int i_obj_cb_iterup_val;
+      int i_obj_cb_start_val = 0;
+      char s_obj_cb_selec[UCHAR_MAX];
+
+      i_obj_cb_end_val = intHandler("Please enter end vale for count :", buffer_read);
+      i_obj_cb_iterup_val = intHandler("Please enter interuption value :", buffer_read);
+      stringHandler("Sellect continue or break :", buffer_read, s_obj_cb_selec);
+
+
+      if (strcmp(s_obj_cb_selec, "break") == 0) {
+        while (i_obj_cb_start_val <= i_obj_cb_end_val) {
+          printf("Step :%d\n", i_obj_cb_start_val);
+          i_obj_cb_start_val++;
+          if(i_obj_cb_start_val == i_obj_cb_iterup_val){
+            printf("Break \n");
+            break;
+          }
+        }
+      }
+      else if (strcmp(s_obj_cb_selec, "continue") == 0) {
+        while (i_obj_cb_start_val <= i_obj_cb_end_val) {
+          i_obj_cb_start_val++;
+          if(i_obj_cb_start_val == i_obj_cb_iterup_val) {
+            printf("Continue\n");
+            continue;
+          }
+          printf("Step :%d\n", i_obj_cb_start_val);
+        }
+      }
+
+      else printf("Incorrect entery!\n");
+
+    }
+
+    else if (i_obj_menu_selctor == 5) {
+
+      char c_obj_case = 0;
+      int i_obj_char_count[UCHAR_MAX];
+      int i_obj_index;
+
+
+      printf("To exit from this block type (#)\n");
+      printf("Type any sentence it will calculate letter amoutn :");
+
+
+      for(int i = 0; i <= UCHAR_MAX; i++){
+        i_obj_char_count[i] = 0;
+      }
+
+      while ((c_obj_case = getchar()) != '#') {
+        while ((c_obj_case = getchar()) != '\n') {
+          switch (c_obj_case) {
+            case 'a':
+              i_obj_index = c_obj_case;
+              i_obj_char_count[i_obj_index] += 1;
+              break;
+            case 'b':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'c':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'd':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'e':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'f':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'g':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'h':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'i':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'j':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'k':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'l':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'm':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'n':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'o':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'p':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'q':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'r':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 's':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 't':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'u':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'v':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'w':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'x':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'y':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+            case 'z':
+            i_obj_index = c_obj_case;
+            i_obj_char_count[i_obj_index] += 1;
+            break;
+          }
+        }
+
+        for(char c = 'a'; c <= 'z'; c++){
+          int i_obj_internal_index;
+          i_obj_internal_index = c;
+          if(i_obj_char_count[i_obj_internal_index] > 0){
+            printf("Letter(%c) was presnt %d times.\n", c, i_obj_char_count[i_obj_internal_index]);
+          }
+        }
+      }
+
+    }
 
     exitHandler(buffer_read, run_val);
   }
@@ -843,19 +1076,22 @@ void operators_branch_jump(int run_val){
 
 void sandbox(int run_val){
 
-
-  int i_sb_int;
-
+      char c_snb_char;
+      int i_snb_int;
 
   while (menu_selector > 0) {
 
-    clear();
 
+    clear();
     printf("Hello you are in SANDBOX\n\n");
 
-    i_sb_int = intHandler("Place value :", buffer_read);
+    printf("Input :");
 
-    printf("You intered value :%d\n", i_sb_int);
+    while ((c_snb_char = getchar()) != '#') {
+
+      printf("%c\n", c_snb_char);
+    }
+
     exitHandler(buffer_read, menu_selector);
   }
 
