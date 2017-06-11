@@ -22,27 +22,29 @@ int menu_selector;
 
 //Methods declarartions
 
-void initialization(int menu_argument);
-void menu(int menu_argument);
+void menu(int initialization);
 
-void converter(int run_val);
-void ident_names(int run_val);
-void reserved_words(int run_val);
-void practicalTest_01(int run_val);
-void data_types_chap3(int run_val);
-void string_inout_char4(int run_val);
-void operator_expressions(int run_val);
-void control_st_loop(int run_val);
-void operators_branch_jump(int run_val);
-void sandbox(int run_val);
+void converter(int run_param);
+void ident_names(int run_param);
+void reserved_words(int run_param);
+void practicalTest_01(int run_param);
+void data_types_chap3(int run_param);
+void string_inout_char4(int run_param);
+void operator_expressions(int run_param);
+void control_st_loop(int run_param);
+void operators_branch_jump(int run_param);
+void symbol_io_validation(int run_param);
+void sandbox(int run_param);
 
 
-int   exitHandler(char *s_buffer_read, int selector);
+void   exitHandler(int run_param);
 char* stringHandler(char *arg1_message, char *arg2_input, char *ret_val);
 int   intHandler(char *message, char *input);
 float floatHandler(char *message, char *input);
 float sim_calc(float value_a, char operand, float value_b);
 void  age_to_days(int input_value);
+
+
 
 
 void flush(void);
@@ -53,21 +55,18 @@ void debugger(char *s_msg1, int i_arg1, char *s_msg2, char *s_arg2);
 
 int main(int argc, char const *argv[]) {
 
-  initialization(0);
+  //initialization(0);
+  menu(0);
   return 0;
 }
 
-void initialization(int menu_argument) {
 
-  menu(menu_argument);
-}
 
-void menu(int menu_argument){
+void menu(int initialization){
 
-  menu_selector = menu_argument;
 
   char menu_intem_header [] = "Menu";
-  char menu_intem_sellection [] = "Enter menu item number and press [ENTER]:";
+  char menu_intem_sellection [] = "Sellec menu entry and press [ENTER]:";
   char menu_intem_1 [UCHAR_MAX] = "(1) - Chapert 1 - Intruduction: practical test convert inch to cantimeters";
   char menu_intem_2 [UCHAR_MAX] = "(2) - Chapert 2 - Allowed and Not Allowed identifyer names";
   char menu_intem_3 [UCHAR_MAX] = "(3) - Chapter 2 - Key and Reserved words in C";
@@ -77,12 +76,12 @@ void menu(int menu_argument){
   char menu_intem_7 [UCHAR_MAX] = "(7) - Chapter 5 - Operators, Expressions, and Statements";
   char menu_intem_8 [UCHAR_MAX] = "(8) - Chapter 6 - C Control Statements: Looping";
   char menu_intem_9 [UCHAR_MAX] = "(9) - Chapter 7 - C Control operators, branching and Jumps";
+  char menu_intem_10[UCHAR_MAX] = "(10) - Chapter 8 - C Symbol input/output and input validation";
   char menu_item_0  [UCHAR_MAX] = "(99) - SandBox";
 
-  while (menu_selector == 0){
     //clear screen
     clear();
-    debugger("Menu location", menu_selector, "Last Buffer Read", buffer_read);
+    //debugger("Menu location", menu_selector, "Last Buffer Read", buffer_read);
 
     printf("%s\n", menu_intem_header);
     printf("\n");
@@ -95,23 +94,52 @@ void menu(int menu_argument){
     printf("%s\n", menu_intem_7);
     printf("%s\n", menu_intem_8);
     printf("%s\n", menu_intem_9);
+    printf("%s\n", menu_intem_10);
     printf("%s\n", menu_item_0);
 
     menu_selector = intHandler(menu_intem_sellection, buffer_read);
 
-    if (menu_selector == 1) converter(menu_selector);
-    else if (menu_selector == 2)  ident_names(menu_selector);
-    else if (menu_selector == 3)  reserved_words(menu_selector);
-    else if (menu_selector == 4)  practicalTest_01(menu_selector);
-    else if (menu_selector == 5)  data_types_chap3(menu_selector);
-    else if (menu_selector == 6)  string_inout_char4(menu_selector);
-    else if (menu_selector == 7)  operator_expressions(menu_selector);
-    else if (menu_selector == 8)  control_st_loop(menu_selector);
-    else if (menu_selector == 9)  operators_branch_jump(menu_selector);
-    else if (menu_selector == 99) sandbox(menu_selector);
+    switch (menu_selector) {
+      case 1:
+        converter(menu_selector);
+        break;
+      case 2:
+        ident_names(menu_selector);
+        break;
+      case 3:
+        reserved_words(menu_selector);
+        break;
+      case 4:
+        practicalTest_01(menu_selector);
+        break;
+      case 5:
+        data_types_chap3(menu_selector);
+        break;
+      case 6:
+        string_inout_char4(menu_selector);
+        break;
+      case 7:
+        operator_expressions(menu_selector);
+        break;
+      case 8:
+        control_st_loop(menu_selector);
+        break;
+      case 9:
+        operators_branch_jump(menu_selector);
+        break;
+      case 10:
+        symbol_io_validation(menu_selector);
+        break;
+      case 99:
+        sandbox(menu_selector);
+        break;
+      default:
+        menu(0);
+        break;
+    }
 
-    exitHandler(buffer_read, menu_selector);
-  }
+    exitHandler(0);
+    clear();
 }
 
 void flush(void){
@@ -132,45 +160,25 @@ void debugger(char *s_msg1, int i_arg1, char *s_msg2, char *s_arg2){
 
 
 //Mathod to conver Inch -> CM. Menu item 1.0
-void converter(int run_val) {
+void converter(int run_param){
 
-  //Strings declarartions
-  char item_01_header [] = "Convert application";
-  char item_01_description [] = "(inch -> cm)";
-  char inches [] = "inches :";
-  char cm [] = "cm :";
-
-  //Code variables declarartion
-  float input_value;
-  const float conv_value = 2.54;
-  float result;
-
-
-
-  while (menu_selector > 0) {
-
-    //clear screen
-    clear();
-    debugger("Menu selector", menu_selector, "Last Buffer read", buffer_read);
-
-    printf("%s\n", item_01_header);
-    printf("\n%s\n", item_01_description);
-
-    input_value = -1;
-
-    while (input_value != 0) {
-      input_value = floatHandler("Enter value in inches: 0.0\b\b\b", buffer_read);
-      result = input_value * conv_value;
-      printf("%s %f\n", inches, input_value);
-      printf("%s %f\n", cm, result);
-    }
-
-    exitHandler(buffer_read, menu_selector);
+  int i_run;
+  float f_cnv_read_val;
+  float f_cnv_cm;
+  const float F_INCH_TO_CM = 2.54;
+while (run_param == 1) {
+  clear();
+  printf("This is DEMO converet for exit type 'e' and press [ENTER]\n");
+  while (printf("inch : "),(i_run = scanf("%f", &f_cnv_read_val)) == 1) {
+    f_cnv_cm = f_cnv_read_val * F_INCH_TO_CM;
+    printf("(%f) inch = (%f) cm\n", f_cnv_read_val, f_cnv_cm);
   }
+  exitHandler(run_param);
+ }
 }
 
 //Method for Allowed/Not Allowed names. Menu item 2.1
-void ident_names(int run_val){
+void ident_names(int run_param){
 
 //code variabeles declarartion
   char *aNameHeader[0];
@@ -200,7 +208,7 @@ void ident_names(int run_val){
   na_Name[3] = "2allowname";
   na_Name[4] = "allow`name";
 
-  while(menu_selector > 0){
+  while(menu_selector == 2){
   step = 0;
   i_arr_no = 0;
   size = sizeof(a_Name)/sizeof(a_Name[0]);
@@ -216,10 +224,11 @@ printf("%s\t%s\n\n", aNameHeader[0], naNameHeader[0]);
    printf("%s", a_Name[i_arr_no]);
    printf("\t%s\n", na_Name[i_arr_no]);
    ++i_arr_no;
+  }
+  getchar();
+  exitHandler(run_param);
  }
 
- exitHandler(buffer_read, menu_selector);
-  }
 }
 
 //Key/Reserved words method implementation
@@ -298,13 +307,14 @@ void reserved_words(int run_val){
     ++column;
     }
     printf("\n");
-    exitHandler(buffer_read, menu_selector);
+    getchar();
+    exitHandler(menu_selector);
   }
 }
 
 //Practical Test 01
 
-void practicalTest_01(int run_val) {
+void practicalTest_01(int run_param) {
 
 
   //Methor variables
@@ -320,7 +330,7 @@ void practicalTest_01(int run_val) {
   int test_01_age;
 
 
-  while (menu_selector > 0) {
+  while (run_param == 4) {
 
     clear();
 
@@ -357,13 +367,14 @@ void practicalTest_01(int run_val) {
 
     age_to_days(test_01_age);
 
-    exitHandler(buffer_read, menu_selector);
+    getchar();
+    exitHandler(menu_selector);
   }
 
 }
 
 
-void data_types_chap3(int run_val) {
+void data_types_chap3(int run_param) {
 
     char *data_kr[7];
     char *data_c90[2];
@@ -388,7 +399,7 @@ void data_types_chap3(int run_val) {
     int data_value_int;
     float data_value_float;
 
-    while (menu_selector > 0) {
+    while (run_param == 5) {
 
       clear();
 
@@ -464,13 +475,14 @@ void data_types_chap3(int run_val) {
 
       printf("\n\n");
 
-      exitHandler(buffer_read, menu_selector);
+      getchar();
+      exitHandler(menu_selector);
     }
 }
 
 //Chap-4 String and format input/output text
 
-void string_inout_char4(int run_val){
+void string_inout_char4(int run_param){
 
   int i_string_size;
   int i_string_size_01;
@@ -479,7 +491,7 @@ void string_inout_char4(int run_val){
   char s_string_01[UCHAR_MAX];
 
 
-  while (menu_selector > 0) {
+  while (run_param == 6) {
     clear();
     printf("Charpter-4 Character Strings and Formatted Input/Output\n");
 
@@ -495,12 +507,13 @@ void string_inout_char4(int run_val){
 
     printf("\n");
 
-    exitHandler(buffer_read, menu_selector);
+    getchar();
+    exitHandler(menu_selector);
   }
 
 }
 
-void operator_expressions(int run_val){
+void operator_expressions(int run_param){
 
   int i_op_selecot;
   int i_op_while_value_01;
@@ -529,7 +542,7 @@ void operator_expressions(int run_val){
   float f_op_con_value;
   short sh_op_conv_value;
 
-  while (menu_selector >0) {
+  while (run_param == 7) {
 
     clear();
     printf("Operators, Expressions, and Statements\n");
@@ -539,22 +552,30 @@ void operator_expressions(int run_val){
     printf("3 - Simple calculator\n");
     printf("4 - Type conversation\n");
     printf("5 - Practical Test\n");
+    printf("6 - Exit\n");
 
     i_op_selecot = intHandler("Sellect block what you would like to test :", buffer_read);
 
     if(i_op_selecot == 1){
 
+        clear();
         printf("This block will conver F to C\n");
 
-        i_op_while_value_01 = intHandler("Enter start weather value in F :", buffer_read);
-        i_op_while_value_02 = intHandler("Enert end weather value in F :", buffer_read);
-        i_op_while_value_03 = intHandler("Enter weather step :", buffer_read);
 
-        while (i_op_while_value_01 <= i_op_while_value_02) {
-        i_op_while_value_04 = (i_op_while_value_01 - 32 ) / 1.8;
-        printf("%9d F = %d C\n", i_op_while_value_01, i_op_while_value_04);
-        i_op_while_value_01 += i_op_while_value_03;
-      }
+
+        do{
+          i_op_while_value_01 = intHandler("Enter start weather value in F :", buffer_read);
+          i_op_while_value_02 = intHandler("Enert end weather value in F :", buffer_read);
+          i_op_while_value_03 = intHandler("Enter weather step :", buffer_read);
+          while (i_op_while_value_01 <= i_op_while_value_02) {
+          i_op_while_value_04 = (i_op_while_value_01 - 32 ) / 1.8;
+          printf("%9d F = %d C\n", i_op_while_value_01, i_op_while_value_04);
+          i_op_while_value_01 += i_op_while_value_03;
+          if(i_op_while_value_01 == 0)break;
+         }
+        }
+        while (i_op_while_value_02 > 0);
+
     }
 
     else if(i_op_selecot == 2){
@@ -562,39 +583,53 @@ void operator_expressions(int run_val){
       printf("Exponential growth\n");
 
       i_op_exp_step = 1;
-      i_op_exp_limit = intHandler("Please enter limit value :", buffer_read);
       d_op_exp_value = 1.0;
       d_op_exp_sum = 0.0;
-      printf("%s\t%s\t%s\t%s\n", s_op_exp_cell, s_op_exp_add, s_op_exp_sum, s_op_exp_perc);
-      while (i_op_exp_step <= i_op_exp_limit) {
-        d_op_exp_sum = d_op_exp_sum + d_op_exp_value;
-        d_op_exp_perc = d_op_exp_sum/CROP;
-        printf("%d %25.5e %23.5e %23.5e%%\n" , i_op_exp_step, d_op_exp_value, d_op_exp_sum, d_op_exp_perc);
-        d_op_exp_value = 2.0 * d_op_exp_value;
 
-        i_op_exp_step++;
+
+      int temp;
+      while (printf("Please enter limit value to exit type 'e' and pess [ENTER] :"),(temp = scanf("%d", &i_op_exp_limit)) == 1) {
+        printf("%s\t%s\t%s\t%s\n", s_op_exp_cell, s_op_exp_add, s_op_exp_sum, s_op_exp_perc);
+        while (i_op_exp_step <= i_op_exp_limit) {
+          d_op_exp_sum = d_op_exp_sum + d_op_exp_value;
+          d_op_exp_perc = d_op_exp_sum/CROP;
+          printf("%d %25.5e %23.5e %23.5e%%\n" , i_op_exp_step, d_op_exp_value, d_op_exp_sum, d_op_exp_perc);
+          d_op_exp_value = 2.0 * d_op_exp_value;
+
+          i_op_exp_step++;
+        }
       }
 
     }
 
     else if (i_op_selecot == 3) {
 
-      printf("This is Simple calculator\n");
-      scanf("%f%c%f", &f_op_calc_a, &c_op_calc_operand, &f_op_calc_b); flush();
-      printf("%f\n", sim_calc(f_op_calc_a, c_op_calc_operand, f_op_calc_b));
+      int temp;
+      clear();
+      printf("This is Simple calculator to exit from calculator type 'e' and exit\n");
+
+      while ((temp = scanf("%f%c%f", &f_op_calc_a, &c_op_calc_operand, &f_op_calc_b)) == 3) {
+        printf("%f\n", sim_calc(f_op_calc_a, c_op_calc_operand, f_op_calc_b));
+        printf("%d\n", temp);
+      }
+
     }
 
     else if (i_op_selecot == 4) {
 
-      i_op_con_value = intHandler("Enter int value : 0\b", buffer_read);
-      f_op_con_value = i_op_con_value;
-      sh_op_conv_value = i_op_con_value;
-      printf("Vlue conversation from int -> float : %d -> %f\n", i_op_con_value, f_op_con_value);
-      printf("Value converted from int to short : %d -> %d\n", i_op_con_value, sh_op_conv_value);
+      clear();
+      int temp;
+      while (printf("Enter int value to exit type 'e' and press [ENTER] :"), (temp = scanf("%d", &i_op_con_value)) == 1) {
+        f_op_con_value = i_op_con_value;
+        sh_op_conv_value = i_op_con_value;
+        printf("Vlue conversation from int -> float : %d -> %f\n", i_op_con_value, f_op_con_value);
+        printf("Value converted from int to short : %d -> %d\n", i_op_con_value, sh_op_conv_value);
+        flush();
 
-      f_op_con_value = floatHandler("Enter float value : 0.0\b\b\b", buffer_read);
-      i_op_con_value = f_op_con_value;
-      printf("Value conversation from float to int : %f -> %d\n", f_op_con_value, i_op_con_value);
+        f_op_con_value = floatHandler("Enter float value : 0.0\b\b\b", buffer_read);
+        i_op_con_value = f_op_con_value;
+        printf("Value conversation from float to int : %f -> %d\n", f_op_con_value, i_op_con_value);
+      }
     }
 
     else if (i_op_selecot == 5) {
@@ -603,6 +638,8 @@ void operator_expressions(int run_val){
 
         int i_op_pr_min;
         int i_op_pr_h;
+
+        clear();
 
         while ((i_op_pr_min = intHandler("Enter minutes :", buffer_read)) != 0) {
 
@@ -614,25 +651,22 @@ void operator_expressions(int run_val){
 
     }
 
-    printf("\n");
-    exitHandler(buffer_read, menu_selector);
+    else if (i_op_selecot == 6) {
+      exitHandler(run_param);
+    }
   }
 }
 
 
-void control_st_loop(int run){
+void control_st_loop(int run_param){
 
   int i_control_select;
 
-  long l_ctrl_sum;
-  int i_ctrl_num;
-  int i_ctrl_status;
 
-  char c_ctrl_sign;
 
-  while (menu_selector > 0) {
+
+  while (run_param == 8) {
     clear();
-    debugger("Menu location", i_ctrl_status, "Control state:", buffer_read);
     printf("C Control Statements: Looping\n");
 
     printf("(1) - Advanced calculator\n");
@@ -646,56 +680,67 @@ void control_st_loop(int run){
 
     if (i_control_select == 1) {
 
-      i_ctrl_num = 0;
-      l_ctrl_sum = 0;
+    float f_ctrl_start_value;
+    float f_ctrl_add_value;
+    char  c_ctrl_sign;
 
-      printf("Enter start value :");
-      scanf("%d", &i_ctrl_num); flush();
-      l_ctrl_sum += i_ctrl_num;
-      i_ctrl_status = 2;
+    clear();
+    printf("Extended calculator :\n");
+    printf("Place start value and press [ENTER] :");
+    scanf("%f", &f_ctrl_start_value);
 
-      while (i_ctrl_status == 2) {
-        printf("%ld", l_ctrl_sum);
-        i_ctrl_status = scanf("%c%d", &c_ctrl_sign, &i_ctrl_num);flush();
-        //printf("%c%d\n", c_ctrl_sign, i_ctrl_num);
-        if (c_ctrl_sign == '+') l_ctrl_sum += i_ctrl_num;
-        if (c_ctrl_sign == '-') l_ctrl_sum -= i_ctrl_num;
-        if (c_ctrl_sign == '*') l_ctrl_sum *= i_ctrl_num;
-        if (c_ctrl_sign == '/') l_ctrl_sum /= i_ctrl_num;
-      }
+    int temp;
+
+    while (flush(),printf("expression :"),(temp = scanf("%c%f", &c_ctrl_sign, &f_ctrl_add_value)) == 2) {
+      switch (c_ctrl_sign) {
+        case '+':
+          printf("%f\n", f_ctrl_start_value += f_ctrl_add_value);
+          break;
+        case '-':
+          printf("%f\n", f_ctrl_start_value -= f_ctrl_add_value);
+          break;
+        case '/':
+          printf("%f\n", f_ctrl_start_value /= f_ctrl_add_value);
+          break;
+        case '*':
+          printf("%f\n", f_ctrl_start_value *= f_ctrl_add_value);
+          break;
+        }
     }
+}
 
     if (i_control_select == 2) {
       int i_ctrl_for_init;
       int i_ctrl_for_limit;
       char s_ctrl_for_cond[UCHAR_MAX];
 
+      clear();
       printf("This is block - for(initialization; condition; operation)\n");
 
-      i_ctrl_for_init =   intHandler("Enter initialization value :", buffer_read);
-      i_ctrl_for_limit =  intHandler("Enter limit value :", buffer_read);
-      stringHandler("Select + or - conditon :", buffer_read, s_ctrl_for_cond);
+      int temp;
+      while (printf("Enter initizalization value :"),(temp = scanf("%d", &i_ctrl_for_init)) == 1) {
+        flush();
+        i_ctrl_for_limit =  intHandler("Enter limit value :", buffer_read);
+        stringHandler("Select + or - conditon :", buffer_read, s_ctrl_for_cond);
 
-
-      if (strcmp(s_ctrl_for_cond, "+") == 0) {
+        if (strcmp(s_ctrl_for_cond, "+") == 0) {
 
         int i_ctrl_for;
         char s_ctrl_for_string[UCHAR_MAX] = "block for";
         for (i_ctrl_for = i_ctrl_for_init; i_ctrl_for < i_ctrl_for_limit; i_ctrl_for++) {
-          printf("(%d)%s\n", i_ctrl_for, s_ctrl_for_string);
-        }
+        printf("(%d)%s\n", i_ctrl_for, s_ctrl_for_string);
       }
-
-      else if (strcmp(s_ctrl_for_cond, "-") == 0) {
+  }
+        else if (strcmp(s_ctrl_for_cond, "-") == 0) {
 
         int i_ctrl_for;
         char s_ctrl_for_string[UCHAR_MAX] = "block for";
         for (i_ctrl_for = i_ctrl_for_init; i_ctrl_for > i_ctrl_for_limit; i_ctrl_for--) {
-          printf("(%d)%s\n", i_ctrl_for, s_ctrl_for_string);
-        }
+        printf("(%d)%s\n", i_ctrl_for, s_ctrl_for_string);
       }
-
     }
+  }
+  }
 
     if (i_control_select == 3) {
 
@@ -703,13 +748,20 @@ void control_st_loop(int run){
       int i_ctrl_p2_power;
       int i_ctrl_p2_count;
       int i_ctrl_p2_limit;
+      clear();
+      printf("Block power of 2\n");
+      int temp;
+      while (printf("Enter count :"), (temp = scanf("%d", &i_ctrl_p2_limit)) == 1) {
+        flush();
+        for (f_ctrl_p2_time = 0, i_ctrl_p2_count = 1, i_ctrl_p2_power =1; i_ctrl_p2_count < i_ctrl_p2_limit; i_ctrl_p2_count++, i_ctrl_p2_power += i_ctrl_p2_power){
 
-      i_ctrl_p2_limit = intHandler("Enter count ", buffer_read);
-      for (f_ctrl_p2_time = 0, i_ctrl_p2_count = 1, i_ctrl_p2_power =1; i_ctrl_p2_count < i_ctrl_p2_limit; i_ctrl_p2_count++, i_ctrl_p2_power += i_ctrl_p2_power){
-
-        f_ctrl_p2_time += 1.0 / i_ctrl_p2_power;
-        printf("%0.30f\n", f_ctrl_p2_time);
+          f_ctrl_p2_time += 1.0 / i_ctrl_p2_power;
+          printf("%0.30f\n", f_ctrl_p2_time);
+        }
       }
+
+      //i_ctrl_p2_limit = intHandler("Enter count ", buffer_read);
+
     }
 
     if(i_control_select == 4){
@@ -717,10 +769,6 @@ void control_st_loop(int run){
       int i_ctrl_rest_tables;
       int i_ctrl_rest_hours;
       int i_ctrl_rest_persons_per_table;
-
-      int i_ctrl_rest_max_tables;
-      int i_ctrl_rest_max_hours;
-      int i_ctrl_rest_max_pers_per_tab;
 
 
       const float F_CTRL_REST_TAX = 0.085;
@@ -731,58 +779,35 @@ void control_st_loop(int run){
       float f_ctrl_person_per_day;
       float f_ctrl_rest_result = 0;
 
-      float f_ctrl_max_min_per_tab;
+      clear();
+      printf("Restaurant profit calculator\n");
 
-      i_ctrl_rest_tables = intHandler("How many tables in you Restaurant :", buffer_read);;
-      i_ctrl_rest_hours = intHandler("How many hours open your Restaurant :", buffer_read);
-      i_ctrl_rest_persons_per_table = intHandler("How many persons at on table :", buffer_read);
-      f_ctrl_rest_averege_menu_price  = floatHandler("Average menu price :", buffer_read);
-      f_ctrl_res_time_per_tab = floatHandler("How many minutes per table :", buffer_read);
-      f_ctrl_rest_tips  = floatHandler("How much tips :", buffer_read);
+      int temp;
+      while (printf("Enter table count in Restaurant :"), (temp = scanf("%d", &i_ctrl_rest_tables)) == 1) {
+        flush();
+        i_ctrl_rest_hours = intHandler("How many hours open your Restaurant :", buffer_read);
+        i_ctrl_rest_persons_per_table = intHandler("How many persons at on table :", buffer_read);
+        f_ctrl_rest_averege_menu_price  = floatHandler("Average menu price :", buffer_read);
+        f_ctrl_res_time_per_tab = floatHandler("How many minutes per table :", buffer_read);
+        f_ctrl_rest_tips  = floatHandler("How much tips :", buffer_read);
 
-      f_ctrl_person_per_day = i_ctrl_rest_hours * 60;
-      f_ctrl_person_per_day = (f_ctrl_person_per_day / f_ctrl_res_time_per_tab) * i_ctrl_rest_persons_per_table;
+        f_ctrl_person_per_day = i_ctrl_rest_hours * 60;
+        f_ctrl_person_per_day = (f_ctrl_person_per_day / f_ctrl_res_time_per_tab) * i_ctrl_rest_persons_per_table;
 
-      f_ctrl_rest_tips = f_ctrl_rest_tips  / 100;
-      f_ctrl_rest_averege_menu_price += f_ctrl_rest_averege_menu_price * F_CTRL_REST_TAX;
-      f_ctrl_rest_averege_menu_price += f_ctrl_rest_averege_menu_price * f_ctrl_rest_tips;
-      f_ctrl_rest_result = f_ctrl_rest_averege_menu_price * f_ctrl_person_per_day;
-
-
-
-      printf("People trough put is :%0.f\n", f_ctrl_person_per_day);
-      printf("Menu cost + TAX : %.2f\n", f_ctrl_rest_averege_menu_price);
-      printf("Your sales is : %f\n", f_ctrl_rest_result);
-
-      f_ctrl_person_per_day = 0;
-
-      i_ctrl_rest_max_tables  = intHandler("Please enter max table :", buffer_read);
-      i_ctrl_rest_max_hours = intHandler("Please enetr max hours :", buffer_read);
-      i_ctrl_rest_max_pers_per_tab  = intHandler("Please enter max people per table :", buffer_read);
-      f_ctrl_max_min_per_tab  = floatHandler("Max minutes per table :", buffer_read);
+        f_ctrl_rest_tips = f_ctrl_rest_tips  / 100;
+        f_ctrl_rest_averege_menu_price += f_ctrl_rest_averege_menu_price * F_CTRL_REST_TAX;
+        f_ctrl_rest_averege_menu_price += f_ctrl_rest_averege_menu_price * f_ctrl_rest_tips;
+        f_ctrl_rest_result = f_ctrl_rest_averege_menu_price * f_ctrl_person_per_day;
 
 
-      for(i_ctrl_rest_tables = 1;i_ctrl_rest_tables <= i_ctrl_rest_max_tables; i_ctrl_rest_tables++){
 
-        printf("Amount of tables (%d)\n", i_ctrl_rest_tables);
-        for(i_ctrl_rest_hours = 1; i_ctrl_rest_hours <= i_ctrl_rest_max_hours; i_ctrl_rest_hours++){
-          printf("Open hours (%d)\n", i_ctrl_rest_hours);
-          for(i_ctrl_rest_persons_per_table = 1; i_ctrl_rest_persons_per_table <= i_ctrl_rest_max_pers_per_tab; i_ctrl_rest_persons_per_table++){
-            printf("Persons per table (%d)\n", i_ctrl_rest_persons_per_table);
-            for(f_ctrl_res_time_per_tab = 10; f_ctrl_res_time_per_tab <= f_ctrl_max_min_per_tab; f_ctrl_res_time_per_tab += 10){
-              printf("Minutes per table (%0.f)\t", f_ctrl_res_time_per_tab);
-              f_ctrl_person_per_day = i_ctrl_rest_hours * 60;
-              f_ctrl_person_per_day = (f_ctrl_person_per_day / f_ctrl_res_time_per_tab) * i_ctrl_rest_persons_per_table;
-              f_ctrl_rest_result = f_ctrl_rest_averege_menu_price * f_ctrl_person_per_day;
-              printf("Trough put (%0.f)\t", f_ctrl_person_per_day);
-              printf("Sales (%.2f)\n", f_ctrl_rest_result);
-
-            }
-            printf("\n");
-          }
-        }
-        printf("\n");
+        printf("People trough put is :%0.f\n", f_ctrl_person_per_day);
+        printf("Menu cost + TAX : %.2f\n", f_ctrl_rest_averege_menu_price);
+        printf("Your sales is : %f\n", f_ctrl_rest_result);
       }
+
+      //i_ctrl_rest_tables = intHandler("How many tables in you Restaurant :", buffer_read);;
+
     }
 
     if(i_control_select == 5){
@@ -790,7 +815,9 @@ void control_st_loop(int run){
       char s_ctrl_pt_str[UCHAR_MAX];
       int i_ctrl_pt_st_lenght;
 
-      while (run > 0) {
+      clear();
+
+      while (strcmp(s_ctrl_pt_str, "exit") != 0) {
         stringHandler("Enter phrase :", buffer_read, s_ctrl_pt_str);
         i_ctrl_pt_st_lenght = strlen(s_ctrl_pt_str);
 
@@ -798,9 +825,10 @@ void control_st_loop(int run){
         printf("You have entered :%s\n", s_ctrl_pt_str);
         for(int i = i_ctrl_pt_st_lenght; i >= 0; i--) printf("%c", s_ctrl_pt_str[i]);
         printf("\n");
-
-        exitHandler(buffer_read, run);
+        //exitHandler(run_param);
       }
+      strcpy(s_ctrl_pt_str, "");
+      exitHandler(run_param);
     }
 
 
@@ -810,25 +838,23 @@ void control_st_loop(int run){
             float f_ctrl_pt_one_result;
             float f_ctrl_pt_one = 1.0;
 
-            while (run > 0) {
-
-              i_ctrl_pt_limit_max = intHandler("Please enter limit value :", buffer_read);
-
+            clear();
+            int temp;
+            while (printf("Please enetr value, to exit press 'e' :"),(temp = scanf("%d", &i_ctrl_pt_limit_max)) == 1) {
               for(int i = 2; i <= i_ctrl_pt_limit_max; i += 2){
 
                 f_ctrl_pt_one_result = f_ctrl_pt_one / i;
                 printf("1/%d = %.30f\n", i, f_ctrl_pt_one_result);
               }
-
-              exitHandler(buffer_read, run);
             }
+            exitHandler(run_param);
           }
 
-    exitHandler(buffer_read, menu_selector);
+          else exitHandler(run_param);
   }
 }
 
-void operators_branch_jump(int run_val){
+void operators_branch_jump(int run_param){
 
   int i_obj_menu_selctor;
 
@@ -850,34 +876,58 @@ void operators_branch_jump(int run_val){
     if(i_obj_menu_selctor == 1){
 
       char c_obj_str_01;
+      int temp;
 
-      printf("Enter pharse to encode it :");
-      while ((c_obj_str_01 = getchar()) != '\n') {
+      temp = 1;
+      clear();
 
-        putchar(c_obj_str_01 + 1);
+      while (temp == 1) {
+        printf("Enter pharse to encode it if you like to exit type '#' :");
+        while ((c_obj_str_01 = getchar()) != '\n') {
+
+          if (c_obj_str_01 == '#') temp = 0;
+          putchar(c_obj_str_01 + 1);
+        }
+        //printf("%c\n", c_obj_str_01);
+        printf("\n");
+        }
       }
-      printf("\n");
-    }
+
+
+
 
     else if(i_obj_menu_selctor == 2){
 
       char c_obj_str_01;
+      int temp;
 
-      printf("Enter pharse to encode it :");
-      while ((c_obj_str_01 = getchar()) != '\n') {
+      temp = 1;
 
-        if (isalpha(c_obj_str_01)) putchar(c_obj_str_01 + 10);
-        else putchar(c_obj_str_01);
+      clear();
+
+      while (temp == 1) {
+        printf("Enter pharse to encode it :");
+        while ((c_obj_str_01 = getchar()) != '\n') {
+
+          if(c_obj_str_01 == '#') temp = 0;
+
+          if (isalpha(c_obj_str_01)) putchar(c_obj_str_01 + 10);
+          else putchar(c_obj_str_01);
+        }
+        printf("\n");
       }
-      printf("\n");
     }
+
+
 
     else if(i_obj_menu_selctor == 3){
 
       int i_obj_residual;
       int i_obj_exp_residual;
 
-      while ((i_obj_residual = intHandler("Enter the number :", buffer_read)) > 0) {
+      clear();
+
+      while ((i_obj_residual = intHandler("Enter the number to exit enter 0 :", buffer_read)) > 0) {
 
         for (int i = 2; i <= 100; i++) {
 
@@ -886,7 +936,7 @@ void operators_branch_jump(int run_val){
 
             while((i_obj_exp_residual % i) == 0){
               i_obj_exp_residual /= i;
-              printf("%d (%d)\n", i, i_obj_exp_residual);
+              printf("%d / %d = %d\n", i_obj_exp_residual * i, i, i_obj_exp_residual);
             }
 
           }
@@ -899,37 +949,44 @@ void operators_branch_jump(int run_val){
 
       int i_obj_cb_end_val;
       int i_obj_cb_iterup_val;
-      int i_obj_cb_start_val = 0;
+      int i_obj_cb_start_val;
       char s_obj_cb_selec[UCHAR_MAX];
+      int temp;
 
-      i_obj_cb_end_val = intHandler("Please enter end vale for count :", buffer_read);
-      i_obj_cb_iterup_val = intHandler("Please enter interuption value :", buffer_read);
-      stringHandler("Sellect continue or break :", buffer_read, s_obj_cb_selec);
+      clear();
+
+      while (printf("Please enter end value for count, to exit enter 'e' :") ,(temp = scanf("%d", &i_obj_cb_end_val)) == 1) {
+
+        flush();
+        i_obj_cb_iterup_val = intHandler("Please enter interuption value :", buffer_read);
+        stringHandler("Sellect continue or break :", buffer_read, s_obj_cb_selec);
+        i_obj_cb_start_val = 0;
 
 
-      if (strcmp(s_obj_cb_selec, "break") == 0) {
-        while (i_obj_cb_start_val <= i_obj_cb_end_val) {
-          printf("Step :%d\n", i_obj_cb_start_val);
-          i_obj_cb_start_val++;
-          if(i_obj_cb_start_val == i_obj_cb_iterup_val){
-            printf("Break \n");
-            break;
+        if (strcmp(s_obj_cb_selec, "break") == 0) {
+          while (i_obj_cb_start_val <= i_obj_cb_end_val) {
+            printf("Step :%d\n", i_obj_cb_start_val);
+            i_obj_cb_start_val++;
+            if(i_obj_cb_start_val == i_obj_cb_iterup_val){
+              printf("Break \n");
+              break;
+            }
           }
         }
-      }
-      else if (strcmp(s_obj_cb_selec, "continue") == 0) {
-        while (i_obj_cb_start_val <= i_obj_cb_end_val) {
-          i_obj_cb_start_val++;
-          if(i_obj_cb_start_val == i_obj_cb_iterup_val) {
-            printf("Continue\n");
-            continue;
+        else if (strcmp(s_obj_cb_selec, "continue") == 0) {
+          while (i_obj_cb_start_val < i_obj_cb_end_val) {
+            i_obj_cb_start_val++;
+            if(i_obj_cb_start_val == i_obj_cb_iterup_val) {
+              printf("Continue\n");
+              continue;
+            }
+            printf("Step :%d\n", i_obj_cb_start_val);
           }
-          printf("Step :%d\n", i_obj_cb_start_val);
         }
+
+        else printf("Incorrect entery!\n");
       }
-
-      else printf("Incorrect entery!\n");
-
+      flush();
     }
 
     else if (i_obj_menu_selctor == 5) {
@@ -937,17 +994,18 @@ void operators_branch_jump(int run_val){
       char c_obj_case = 0;
       int i_obj_char_count[UCHAR_MAX];
       int i_obj_index;
+      int temp;
 
-
-      printf("To exit from this block type (#)\n");
-      printf("Type any sentence it will calculate letter amoutn :");
+      clear();
 
 
       for(int i = 0; i <= UCHAR_MAX; i++){
         i_obj_char_count[i] = 0;
       }
 
-      while ((c_obj_case = getchar()) != '#') {
+      temp = 1;
+      printf("Type any sentence it will calculate letter amoutn to exit type '#' :");
+      while (temp == 1) {
         while ((c_obj_case = getchar()) != '\n') {
           switch (c_obj_case) {
             case 'a':
@@ -1054,6 +1112,9 @@ void operators_branch_jump(int run_val){
             i_obj_index = c_obj_case;
             i_obj_char_count[i_obj_index] += 1;
             break;
+            case '#':
+            temp = 0;
+            break;
           }
         }
 
@@ -1068,60 +1129,90 @@ void operators_branch_jump(int run_val){
 
     }
 
-    exitHandler(buffer_read, run_val);
+    exitHandler(run_param);
+  }
+}
+
+void symbol_io_validation(int run_param){
+
+
+int i_smb_v_menu_selector;
+
+
+while (run_param > 0) {
+  clear();
+  printf("Menu - (%d) - Symbol input output and input validation \n", run_param);
+
+  printf("1. Echo\n");
+  printf("2. Exit\n");
+
+  void smb_echo(void);
+
+  i_smb_v_menu_selector = intHandler("Sellec sub-menu option :", buffer_read);
+  switch (i_smb_v_menu_selector) {
+    case 1:
+      smb_echo();
+      break;
+    case 2:
+      exitHandler(run_param);
+      break;
+    }
+  }
+}
+
+void smb_echo(){
+
+  char c_smb_echo;
+  clear();
+  printf("10.1 Echo menu\n");
+  printf("Type any word and program will type ECHO to exit type '#'\n");
+  printf(" :");
+  while ((c_smb_echo = getchar()) != '#') {
+    putchar(c_smb_echo);
   }
 }
 
 //SandBox
 
-void sandbox(int run_val){
-
-      char c_snb_char;
-      int i_snb_int;
-
-  while (menu_selector > 0) {
-
-
-    clear();
-    printf("Hello you are in SANDBOX\n\n");
-
-    printf("Input :");
-
-    while ((c_snb_char = getchar()) != '#') {
-
-      printf("%c\n", c_snb_char);
-    }
-
-    exitHandler(buffer_read, menu_selector);
-  }
+void sandbox(int run_param){
 
 }
 
 
 
-int exitHandler(char *s_buffer, int selector){
+void exitHandler(int run_param){
 
   char s_rm_nl  [UCHAR_MAX] = "\n";
-  char s_exit_str [UCHAR_MAX] = "exit";
+  char s_buffer_reader [UCHAR_MAX];
 
+  int i_run;
   int i_exit;
 
-  printf("To exit from block nr. (%d) type (exit) end press [ENTER] :", selector);
-  fgets(s_buffer, UCHAR_MAX, stdin);
-  s_buffer = strtok(s_buffer, s_rm_nl);
+  i_run = run_param;
+  while (i_run > 0) {
 
-  if(s_buffer == NULL) s_buffer = "User input missing";
+    //clear();
+    printf("Last menu (%d)\n", run_param);
+    printf("Would ypu like to exit [yes/no] :");
+    fgets(s_buffer_reader, UCHAR_MAX, stdin);
+    strtok(s_buffer_reader, s_rm_nl);
 
-  if ((i_exit = strcmp(s_buffer, s_exit_str)) == 0) {
-    if (selector > 0) initialization(0);
-
-    else {
-
-      clear();
-      exit(0);
+    if (run_param > 0) {
+      if ((i_exit = strcmp(s_buffer_reader, "yes")) == 0) {
+        i_run = 0;
+        menu(0);
+      }
+      else if ((i_exit = strcmp(s_buffer_reader, "no")) == 0) {
+        i_run = 0;
+        break;
+      }
     }
+      else{
+        exit(0);
+      }
   }
-return selector;
+
+
 }
 
 char* stringHandler(char *arg1_message, char *arg2_input, char *ret_value){
